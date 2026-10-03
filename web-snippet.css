@@ -1,0 +1,14 @@
+/* 可选：贴进你网页的样式里。
+   壳会让网页铺满整块屏幕 (背景延伸到刘海下面)，并给 <html> 加上 in-ios-shell 这个类名。
+   下面几行让"内容"往下让出状态栏，只在壳里生效，不影响浏览器和 PWA。
+   如果你在 project.yml 里改了 ShellHTMLClass，这里的类名也要跟着改。 */
+
+html.in-ios-shell body {
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* 固定在顶部的东西 (顶栏、返回键) 需要单独下移，把选择器换成你自己的 */
+html.in-ios-shell .your-fixed-header {
+  top: env(safe-area-inset-top, 0px);
+}

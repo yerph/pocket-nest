@@ -1,0 +1,37 @@
+# 云端编译：推一个 v 开头的版本号 (如 v1.0.0) → 几分钟后在 Releases 里下载 WebShell.ipa
+# 也可以在 Actions 页面手动点 Run workflow，安装包会出现在那次运行的 Artifacts 里
+name: build-ipa
+on:
+  workflow_dispatch:
+  push:
+    tags: ['v*']
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: xcodegen
+        run: brew install xcodegen && xcodegen generate
+      - name: build (unsigned)
+        run: |
+          xcodebuild -project WebShell.xcodeproj -scheme WebShell -configuration Release -sdk iphoneos \
+            -destination 'generic/platform=iOS' -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" \
+            build 2>&1 | tee build.log | grep -E "error:|warning: |BUILD|Compiling" || true
+          grep -q "BUILD SUCCEEDED" build.log
+      - name: package ipa
+        run: |
+          mkdir -p out/Payload
+          cp -R build/Build/Products/Release-iphoneos/WebShell.app out/Payload/
+          cd out && zip -qr WebShell.ipa Payload && ls -la WebShell.ipa
+      - uses: actions/upload-artifact@v4
+        with:
+          name: WebShell.ipa
+          path: out/WebShell.ipa
+      - name: release on tag
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: out/WebShell.ipa

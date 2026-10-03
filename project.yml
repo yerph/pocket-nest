@@ -1,0 +1,68 @@
+# ─────────────────────────────────────────────────────────────
+#  只需要改这个文件里标了 ①②③④ 的地方，再换一张图标，就能套上你自己的网页。
+#  图标：替换 Shell/Assets.xcassets/AppIcon.appiconset/icon-1024.png
+#        (1024×1024 的 png，不能带透明)
+# ─────────────────────────────────────────────────────────────
+name: WebShell
+options:
+  bundleIdPrefix: com.example
+  deploymentTarget:
+    iOS: "16.4"
+  createIntermediateGroups: true
+  xcodeVersion: "16.0"
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+    TARGETED_DEVICE_FAMILY: "1,2"
+    MARKETING_VERSION: "1.0.0"
+    CURRENT_PROJECT_VERSION: "1"
+    CODE_SIGN_STYLE: Manual
+    CODE_SIGNING_ALLOWED: "NO"
+    CODE_SIGNING_REQUIRED: "NO"
+    DEVELOPMENT_TEAM: ""
+targets:
+  WebShell:
+    type: application
+    platform: iOS
+    sources: [Shell]
+    info:
+      path: Shell/Info.plist
+      properties:
+        # ① app 在桌面上显示的名字
+        CFBundleDisplayName: 我的小窝
+        CFBundleName: WebShell
+
+        # ② 你的网址 (必须是 https)
+        ShellHomeURL: "https://example.com/"
+
+        # ③ 可选项，不懂可以不动
+        # 除了上面那个域名以外，还想留在 app 里打开的域名；其它域名的链接会交给 Safari
+        ShellExtraHosts: []
+        # 壳会给网页的 <html> 加上这个类名，网页可以用它写"只在 app 里生效"的样式
+        ShellHTMLClass: in-ios-shell
+        # 壳会在浏览器身份标识 (User-Agent) 末尾加上这一段
+        ShellUserAgentTag: webshell-ios
+        # 从屏幕左边缘右滑时执行的一句 JS；网页有自己的"返回上一级"函数就填它，比如 goBack()
+        ShellBackJS: "history.back()"
+
+        # ④ 系统询问权限时显示的说明文字，可以改成自己的话
+        NSCameraUsageDescription: 用于在网页里拍照
+        NSPhotoLibraryUsageDescription: 用于在网页里选择照片
+        NSMicrophoneUsageDescription: 用于在网页里录音或语音通话
+
+        UILaunchScreen:
+          UIColorName: LaunchBackground
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        UISupportedInterfaceOrientations~ipad: [UIInterfaceOrientationPortrait, UIInterfaceOrientationPortraitUpsideDown, UIInterfaceOrientationLandscapeLeft, UIInterfaceOrientationLandscapeRight]
+        UIViewControllerBasedStatusBarAppearance: true
+        UIRequiresFullScreen: false
+        ITSAppUsesNonExemptEncryption: false
+        UIBackgroundModes: [audio]
+        NSAppTransportSecurity:
+          NSAllowsArbitraryLoads: false
+    settings:
+      base:
+        # 建议把 example 换成一个你自己的英文名，避免和别人撞
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.webshell
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        INFOPLIST_KEY_UIApplicationSceneManifest_Generation: "YES"
