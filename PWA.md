@@ -93,14 +93,14 @@ iPhone 上的网页推送有三个前提：
 
 ## 给 AI 的部分
 
-下面是最小可用的写法，按人类方的网页实际情况调整。
+下面是最小可用的写法，按人类方的网页实际情况调整。`YOUR_APP_NAME` 换成人类方想要的名字。
 
 **manifest.json**（放在网站根目录）
 
 ```json
 {
-  "name": "我的小窝",
-  "short_name": "小窝",
+  "name": "YOUR_APP_NAME",
+  "short_name": "YOUR_APP_NAME",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
@@ -120,7 +120,7 @@ iPhone 上的网页推送有三个前提：
 <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=1">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="小窝">
+<meta name="apple-mobile-web-app-title" content="YOUR_APP_NAME">
 <meta name="theme-color" content="#f4f1eb">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 ```

@@ -29,7 +29,7 @@ targets:
       path: Shell/Info.plist
       properties:
         # ① app 在桌面上显示的名字
-        CFBundleDisplayName: 我的小窝
+        CFBundleDisplayName: MyApp
         CFBundleName: WebShell
 
         # ② 你的网址 (必须是 https)
